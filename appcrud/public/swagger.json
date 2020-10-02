@@ -1,0 +1,734 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Teste Backend Luiz Felipe Tavares das Neves",
+        "description": "Todos os endpoins devem ser acompanhados do token de identificação",
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/",
+            "description": "API parar cadastro de clientes e pedidos"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Irá autenticar um usuário com base em seu usuario e senha",
+                "operationId": "authenticate",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "admin@admin.com",
+                                    "password": "admin"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Será listado json com token de acesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "token": "hash do token"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/refresh-token?token='token'": {
+            "get": {
+                "tags": [
+                    "Refresh Token"
+                ],
+                "summary": "Fornece um token renovado",
+                "operationId": "refresh",
+                "responses": {
+                    "200": {
+                        "description": "Será listado json com token de atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "token": "hash do token"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/clientes?token='token'": {
+            "get": {
+                "tags": [
+                    "Cliente"
+                ],
+                "summary": "Listar todos os clientes",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Será listado json com todos os clientes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "dataNascimento": {
+                                            "type": "date"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "endereco.rua": {
+                                            "type": "string"
+                                        },
+                                        "endereco.numero": {
+                                            "type": "string"
+                                        },
+                                        "endereco.bairro": {
+                                            "type": "string"
+                                        },
+                                        "endereco.cidade": {
+                                            "type": "string"
+                                        },
+                                        "endereco.estado": {
+                                            "type": "string"
+                                        },
+                                        "endereco.cep": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": [
+                                        {
+                                            "nome": "Carlo Maggio",
+                                            "dataNascimento": "02/10/2020",
+                                            "email": "hgorczany@example.net",
+                                            "cpf": "8483375584",
+                                            "endereco": {
+                                                "rua": "Elmore Aufderhar",
+                                                "numero": "94",
+                                                "bairro": "bury",
+                                                "cidade": "Russelchester",
+                                                "estado": "HI",
+                                                "cep": "02016375"
+                                            }
+                                        },
+                                        {
+                                            "nome": "Carlo Maggio",
+                                            "dataNascimento": "02/10/2020",
+                                            "email": "hgorczany@example.net",
+                                            "cpf": "8483375584",
+                                            "endereco": {
+                                                "rua": "Elmore Aufderhar",
+                                                "numero": "94",
+                                                "bairro": "bury",
+                                                "cidade": "Russelchester",
+                                                "estado": "HI",
+                                                "cep": "02016375"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cliente Store"
+                ],
+                "summary": "Irá incluir um novo cliente",
+                "operationId": "store",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "dataNascimento": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "date"
+                                    },
+                                    "email": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "endereco.rua": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "endereco.numero": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "endereco.bairro": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "endereco.cidade": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "endereco.estado": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    },
+                                    "endereco.cep": {
+                                        "description": "Criação de um novo cliente e seu endereço",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "nome": "Carlo Maggio",
+                                    "dataNascimento": "02/10/2020",
+                                    "email": "hgorczany@example.net",
+                                    "cpf": "8483375584",
+                                    "rua": "Elmore Aufderhar",
+                                    "numero": "94",
+                                    "bairro": "bury",
+                                    "cidade": "Russelchester",
+                                    "estado": "HI",
+                                    "cep": "02016375"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Será incluido no sistema um novo cliente e seu respectivo endereço",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "retorno": {
+                                            "description": "Criação de um novo cliente e seu endereço",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "retorno": "Cliente :id criado com sucesso!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/clientes/{id}?token='token'": {
+            "get": {
+                "tags": [
+                    "Cliente Show"
+                ],
+                "summary": "Listar um cliente com base em seu ID",
+                "operationId": "show",
+                "responses": {
+                    "200": {
+                        "description": "Será listado json com dados de um cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "dataNascimento": {
+                                            "type": "date"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "endereco.rua": {
+                                            "type": "string"
+                                        },
+                                        "endereco.numero": {
+                                            "type": "string"
+                                        },
+                                        "endereco.bairro": {
+                                            "type": "string"
+                                        },
+                                        "endereco.cidade": {
+                                            "type": "string"
+                                        },
+                                        "endereco.estado": {
+                                            "type": "string"
+                                        },
+                                        "endereco.cep": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "nome": "Carlo Maggio",
+                                        "dataNascimento": "02/10/2020",
+                                        "email": "hgorczany@example.net",
+                                        "cpf": "8483375584",
+                                        "endereco": {
+                                            "rua": "Elmore Aufderhar",
+                                            "numero": "94",
+                                            "bairro": "bury",
+                                            "cidade": "Russelchester",
+                                            "estado": "HI",
+                                            "cep": "02016375"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cliente Update"
+                ],
+                "summary": "Irá atualizar um cliente com base em seu id",
+                "operationId": "update",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "dataNascimento": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "date"
+                                    },
+                                    "email": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "endereco.rua": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "endereco.numero": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "endereco.bairro": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "endereco.cidade": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "endereco.estado": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    },
+                                    "endereco.cep": {
+                                        "description": "Atualização de cliente com base em seu id",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "nome": "Carlo Maggio",
+                                    "dataNascimento": "02/10/2020",
+                                    "email": "hgorczany@example.net",
+                                    "cpf": "8483375584",
+                                    "rua": "Elmore Aufderhar",
+                                    "numero": "94",
+                                    "bairro": "bury",
+                                    "cidade": "Russelchester",
+                                    "estado": "HI",
+                                    "cep": "02016375"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Será atualizado os dados enviados do cliente!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "retorno": {
+                                            "description": "Atualização de cliente com base em seu id",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "retorno": "Cliente :id atualizado com sucesso!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cliente Destroy"
+                ],
+                "summary": "Irá remover um cliente com base em seu id",
+                "operationId": "destroy",
+                "responses": {
+                    "200": {
+                        "description": "O cliente será removido do sistema",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "retorno": {
+                                            "description": "Remover um cliente com base em seu id",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "retorno": "Cliente :id removido com sucesso!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/pedidos?token='token'": {
+            "get": {
+                "tags": [
+                    "Pedido"
+                ],
+                "summary": "Listar todos os pedidos",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Será listado json com todos os pedidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "valor": {
+                                            "type": "float"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        },
+                                        "cartao.titular": {
+                                            "type": "string"
+                                        },
+                                        "cartao.numero": {
+                                            "type": "string"
+                                        },
+                                        "cartao.data_expiracao": {
+                                            "type": "date"
+                                        },
+                                        "cartao.bandeira": {
+                                            "type": "string"
+                                        },
+                                        "cartao.cvv": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": [
+                                        {
+                                            "valor": 100.01,
+                                            "cpf": "11111111111",
+                                            "cartao": {
+                                                "titular": "LUIZ F T NEVES",
+                                                "numero": "1111111111111111",
+                                                "data_expiracao": "01/2020",
+                                                "banderia": "VISA",
+                                                "cvv": 123
+                                            }
+                                        },
+                                        {
+                                            "valor": 100.01,
+                                            "cpf": "11111111111",
+                                            "cartao": {
+                                                "titular": "LUIZ F T NEVES",
+                                                "numero": "1111111111111111",
+                                                "data_expiracao": "01/2020",
+                                                "banderia": "VISA",
+                                                "cvv": 123
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pedido Store"
+                ],
+                "summary": "Irá incluir um novo pedido",
+                "operationId": "store",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "valor": {
+                                        "type": "float"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    },
+                                    "cartao.titular": {
+                                        "type": "string"
+                                    },
+                                    "cartao.numero": {
+                                        "type": "string"
+                                    },
+                                    "cartao.data_expiracao": {
+                                        "type": "date"
+                                    },
+                                    "cartao.bandeira": {
+                                        "type": "string"
+                                    },
+                                    "cartao.cvv": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "valor": 100.01,
+                                    "cpf": "11111111111",
+                                    "cartao": {
+                                        "titular": "LUIZ F T NEVES",
+                                        "numero": "1111111111111111",
+                                        "data_expiracao": "01/2020",
+                                        "banderia": "VISA",
+                                        "cvv": 123
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Será incluido no sistema um novo cartão e um pedido para o cliente relacionado ao CPF",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "retorno": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "retorno": "Pedido :id criado com sucesso!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/pedidos/{id}?token='token'": {
+            "get": {
+                "tags": [
+                    "Pedido Show"
+                ],
+                "summary": "Listar pedido com base em seu id",
+                "operationId": "show",
+                "responses": {
+                    "200": {
+                        "description": "Será listado json com um pedido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "valor": {
+                                            "type": "float"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        },
+                                        "cartao.titular": {
+                                            "type": "string"
+                                        },
+                                        "cartao.numero": {
+                                            "type": "string"
+                                        },
+                                        "cartao.data_expiracao": {
+                                            "type": "date"
+                                        },
+                                        "cartao.bandeira": {
+                                            "type": "string"
+                                        },
+                                        "cartao.cvv": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "valor": 100.01,
+                                        "cpf": "11111111111",
+                                        "cartao": {
+                                            "titular": "LUIZ F T NEVES",
+                                            "numero": "1111111111111111",
+                                            "data_expiracao": "01/2020",
+                                            "banderia": "VISA",
+                                            "cvv": 123
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Pedido update"
+                ],
+                "summary": "Irá atualizar um pedido",
+                "operationId": "update",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "valor": {
+                                        "type": "float"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    },
+                                    "cartao.titular": {
+                                        "type": "string"
+                                    },
+                                    "cartao.numero": {
+                                        "type": "string"
+                                    },
+                                    "cartao.data_expiracao": {
+                                        "type": "date"
+                                    },
+                                    "cartao.bandeira": {
+                                        "type": "string"
+                                    },
+                                    "cartao.cvv": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "valor": 100.01,
+                                    "cpf": "11111111111",
+                                    "cartao": {
+                                        "titular": "LUIZ F T NEVES",
+                                        "numero": "1111111111111111",
+                                        "data_expiracao": "01/2020",
+                                        "banderia": "VISA",
+                                        "cvv": 123
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Será atualizado no sistema o pedido e o cartao vinculado ao pedido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "retorno": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "retorno": "Pedido :id atualizado com sucesso!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pedido Destroy"
+                ],
+                "summary": "Irá remover um pedido com base em seu id",
+                "operationId": "destroy",
+                "responses": {
+                    "200": {
+                        "description": "O pedido será removido do sistema",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "retorno": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "retorno": "Pedido :id removido com sucesso!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
