@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - '3307:3306'
+    environment:
+       MYSQL_DATABASE: 'apicrud'
+       MYSQL_USER: 'apicrud'
+       MYSQL_PASSWORD: 'q1w2e3r4'
+       MYSQL_ROOT_PASSWORD: 'q1w2e3r4'
+    volumes:
+       - ./mysqldados:/app
+  web:
+    build:
+      context: ./
+    volumes:
+      - ./:/app
+
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
